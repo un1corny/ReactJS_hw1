@@ -1,11 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import createReactClass from 'create-react-class';
+
+// React.createClass var2
+
+const App = createReactClass (
+    {
+        render() {
+            return <div>Syntax 2</div>
+        }
+    }
+);
 
 
-const app = document.getElementById('app2');
-
-ReactDOM.render(
-    <div onClick={()=>{alert('1');}}>
-        Второе приложение на React
-    </div>,
-app);
+ReactDOM.render (<App/>, document.getElementById('app2'));
