@@ -4,12 +4,22 @@ import MenuItem from './MenuItem';
 
 
 class Menu extends React.Component {
-    render() {
 
+    constructor(props) {
+        super(props);
+        this.state = {
+            activeTab: 0
+        }
+    }
+
+    render() {
         // 1. for
         // 2. map
         let items = this.props.items.map((item, index) => {
-            return <MenuItem key={index}>{item.title}</MenuItem>
+            return <MenuItem key={index}
+                             // создается функция-обработчик, которая меняет state activeTab
+                             onItemClick={() => {this.setState({activeTab: index})}} href={item.href}
+                             isActive={index === this.state.activeTab}>{item.title}</MenuItem>
         });
 
         return (

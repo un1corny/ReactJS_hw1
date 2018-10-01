@@ -17,11 +17,11 @@ class Blog extends React.Component {
     render() {
 
         const menuItems = [
-            {href: "/", title: "Home"},
-            {href: "/features", title: "New features"},
-            {href: "/press", title: "Press"},
-            {href: "/hires", title: "New hires"},
-            {href: "/about", title: "About"}
+            {href: "#", title: "Home"},
+            {href: "#features", title: "New features"},
+            {href: "#press", title: "Press"},
+            {href: "#hires", title: "New hires"},
+            {href: "#about", title: "About"}
         ];
 
         const posts = [
@@ -52,7 +52,7 @@ class Blog extends React.Component {
 
         return <div>
             <Menu items={menuItems}/>
-            <HelloModal/>
+            {/*<HelloModal/>*/}
             {/*<DisplayElement/>*/}
             {/*<Users items={USERS}/>*/}
             {/*<LifecycleMount/>*/}
