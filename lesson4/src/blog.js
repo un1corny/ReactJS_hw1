@@ -1,8 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Menu from './Menu';
-import PostsList from "./PostsList";
-import Elsewhere from "./Elsewhere";
+import './style.css';
+import Menu from './components/Menu';
+import PostsList from "./components/PostsList";
+import Elsewhere from "./components/Elsewhere";
+import DisplayElement from './components/DisplayElement';
+import Users from './components/Users';
+import LifecycleMount from './components/LifecycleMount';
+import LifecycleUpdate from "./components/LifecycleUpdate";
+import LifecycleUnmount from "./components/LifecycleUnmount";
+import HelloModal from "./components/HelloModal";
 
 
 class Blog extends React.Component {
@@ -41,13 +48,19 @@ class Blog extends React.Component {
             {href: "/facebook", title: "Facebook"}
         ];
 
-        return (
-            <div>
-                <Menu items={menuItems}/>
-                <PostsList title={'The Bootstrap Blog'} items={posts}/>
-                <Elsewhere title={'Elsewhere'} items={socialLinks}/>
-            </div>
-        )
+        const USERS = ["Anna", "Sveta", "Ivan"];
+
+        return <div>
+            <Menu items={menuItems}/>
+            <HelloModal/>
+            {/*<DisplayElement/>*/}
+            {/*<Users items={USERS}/>*/}
+            {/*<LifecycleMount/>*/}
+            {/*<LifecycleUpdate/>*/}
+            {/*<LifecycleUnmount/>*/}
+            <PostsList title={'The Bootstrap Blog'} items={posts}/>
+            <Elsewhere title={'Elsewhere'} items={socialLinks}/>
+        </div>
     }
 }
 

@@ -16,9 +16,9 @@
     "create-react-class": "^15.6.3",
     "jquery": "^3.1.1",
     "prop-types": "^15.6.2",
-    "react": "^15.4.1",
-    "react-bootstrap": "^0.30.7",
-    "react-dom": "^15.4.1"
+    "react": "^16.5.2",
+    "react-bootstrap": "^0.32.4",
+    "react-dom": "^16.5.2"
   },
   "devDependencies": {
     "babel-core": "^6.21.0",

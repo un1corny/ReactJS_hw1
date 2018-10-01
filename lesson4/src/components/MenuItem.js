@@ -2,7 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 class MenuItem extends React.Component {
+
     render() {
+
+        console.log(this.state);
         return <a className="blog-nav-item" target="_blank" href={this.props.href}>{this.props.children}</a>
 
     }
