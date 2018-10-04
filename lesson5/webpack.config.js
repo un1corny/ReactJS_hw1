@@ -8,7 +8,7 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     entry: {
         vendors: path.join(__dirname, 'src', 'vendors'),
-        app: path.join(__dirname, 'src', 'app')
+        app: path.join(__dirname, 'src', 'app2')
 
     },
     output: {
