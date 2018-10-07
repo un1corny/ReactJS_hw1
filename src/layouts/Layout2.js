@@ -16,21 +16,20 @@ export default class Layout2 extends React.Component {
 
     render() {
 
-        return  <div>
+        return <div>
             <Menu brand={this.brand}>
                 <MenuItem href='/' active={this.isActive('/')}>Главная</MenuItem>
                 <MenuItem href='/users' active={this.isActive('/users')}>Пользователи</MenuItem>
                 <MenuItem href='/posts' active={this.isActive('/posts')}>Посты блога</MenuItem>
             </Menu>
 
-
-        <div className='container'>
-            <div className="row">
-                <div className='col-xs-12'>
-                    {this.props.children}
+            <div className='container'>
+                <div className="row">
+                    <div className='col-xs-12'>
+                        {this.props.children}
+                    </div>
                 </div>
             </div>
-        </div>
             <footer>
                 <hr/>
                 &copy; 2018

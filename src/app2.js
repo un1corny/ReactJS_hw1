@@ -7,9 +7,6 @@ import Users from './pages/Users';
 import PageNotFound from './pages/PageNotFound';
 import OneUser from './pages/OneUser';
 import Posts from './pages/Posts';
-import OnePost from './pages/OnePost';
-
-
 
 
 class App extends React.Component {
@@ -20,10 +17,10 @@ class App extends React.Component {
                 <IndexRoute component={Main}/>
                 <Route path='users' component={Users}>
                     {/* Users теперь шаблон для вложенного роута с параметром */}
-                    <Route path=':userId' component={OneUser}/>
+                    {/*<Route path=':userId' component={OneUser}/>*/}
                 </Route>
+                <Route path='users/:userId' component={OneUser}/>
                 <Route path='posts' component={Posts}>
-                    <Route path=':postId' component={OnePost}/>
                 </Route>
                 <Route path='*' component={PageNotFound}/>
             </Route>
