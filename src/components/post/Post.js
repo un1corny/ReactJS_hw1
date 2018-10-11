@@ -13,6 +13,7 @@ export default class Post extends React.Component {
             </div>
             <div className="panel-body">
                 <p><b>Текст поста:</b> {this.props.body}</p>
+                <a href='#' className='post_del' data-id={this.props.id}>Delete post</a>
             </div>
         </div>
     }

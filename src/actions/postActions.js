@@ -1,21 +1,24 @@
-import dispatcher from '../dispatcher';
-import {ADD_POST, GET_POSTS} from '../constants/postConstants';
+import {ADD_POST, GET_POSTS, DELETE_POSTS} from '../constants/postConstants';
 import axios from 'axios';
 
 export function addPost(title, userId, body) {
-    dispatcher.dispatch({
-        type: ADD_POST,  // передаем тип действия, т.е. какая функция должна вызваться в сторе
-        payload: {title, userId, body} // добавляем, если есть какие-нибудь данные
-    });
+    const id = Math.floor(Math.random() * 200) + 100;
+    return {
+        type: ADD_POST,
+        payload: {id, title, userId, body}
+    };
 }
 
 export function getPosts() {
-    axios
-        .get(`https://jsonplaceholder.typicode.com/posts`)
-        .then((response) => {
-            dispatcher.dispatch({
-                type: GET_POSTS,
-                payload: response.data
-            });
-        })
+    return {
+        type: GET_POSTS,
+        payload: axios.get(`https://jsonplaceholder.typicode.com/posts`) // т.к. это не данные, а целиком промис, то сработает apply.middleware, который обработает результат
+    };
+}
+
+export function deletePost(idPost) {
+    return {
+        type: DELETE_POSTS,
+        payload: idPost
+    };
 }

@@ -16,6 +16,8 @@ export default class User extends React.Component {
                 <p>{this.props.name}</p>
                 <p>{this.props.email}</p>
                 <p>{this.props.phone}</p>
+                <a href='#' className='user_del' data-id={this.props.id}>Delete user</a>
+
             </div>
         </div>
     }

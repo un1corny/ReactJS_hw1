@@ -1,67 +1,64 @@
 import React from 'react';
-import PostsList from '../components/PostsList';
-import PostStore from '../stores/postStore';
-import {addPost, getPosts} from '../actions/postActions'
+import PostsList from '../components/post/PostsList';
+import {addPost, getPosts, deletePost} from '../actions/postActions';
+import {connect} from 'react-redux'; // позволяет связать компонент со стором
+import FormPost from '../components/post/AddPost';
+import $ from 'jquery';
 
-export default class Posts extends React.Component {
-    constructor() {
-        super(...arguments);
 
-        this.state = {
-            title: '',
-            posts: []
-        };
-
-        // bind
-        this.newPost = this.newPost.bind(this);
-        this.onPostChange = this.onPostChange.bind(this);
-
-    }
-
-    newPost() {
-        let body = 'Текст нового поста';
-        let userId = 1;
-        // let title = 'Мой пост';
-
-        // Action
-        addPost(this.state.title, userId, body);
-        return false;
-    }
-
-    handleTitleChange(title) {
-        this.setState({title: title})
-    }
-
-    // метод, который будет обновлять состояние. будем его подписывать на событие стора
-
-    onPostChange(posts) {
-        this.setState({posts});
-    }
-
-    // когда сформирует дом-дерево, мы вызовем action
+class Posts extends React.Component {
 
     componentDidMount() {
         // Action
-        getPosts();
-    }
+        this.props.dispatch(getPosts()); // передаем в диспатч, что вернул action
 
-    // подписаться на изменение состояния
+        //добавление поста
+        $('#addPostForm').on('submit', (event) => {
+            event.preventDefault(); // отменяем действие по умочанию, чтобы не перезагружалась страница
 
-    componentWillMount() {
-        PostStore.on('change', this.onPostChange)
+            // данные
+            let $userId = $('#idUser');
+            let $postTitle = $('#postTitle');
+            let $postText  = $('#postText');
+
+            let posts = addPost($postTitle.val(), $userId.val(),  $postText.val()); // передаем значения
+            this.props.dispatch(posts);
+
+            $postTitle.val('');
+            $userId.val('');
+            $postText.val('');
+        });
+
+        // удаление
+        $('a.post_del').on('click', (event) => {
+            event.preventDefault();
+            let idPost = $(event.currentTarget).attr('data-id');
+            this.props.dispatch(deletePost(idPost));
+        });
     }
 
     render() {
+        if(this.props.is_loading) {
+            return <div>
+                Данные загружаются
+            </div>
+        }
         return <div>
-            <form>
-                <input type="text" name="title" placeholder="title" value={this.state.title}
-                       onChange={(event) => this.handleTitleChange(event.target.value)}/>
-                <button className='btn btn-primary' type={'button'} onClick={() => this.newPost()}>Добавить пост
-                </button>
-            </form>
+        <FormPost/>
+        <PostsList posts={this.props.posts}/>
 
-            <PostsList posts={this.state.posts}/>
         </div>
+
 
     }
 }
+
+function mapStateToProps(store) {
+    return {
+        posts: store.posts.posts, // забираем имя стора из combineReducers, и берем из редьюсера свойства объекта стор
+        is_loading: store.posts.is_loading
+    }
+
+}
+
+export default connect(mapStateToProps)(Posts); // возвращается функция, которую мы сразу вызываем для постов

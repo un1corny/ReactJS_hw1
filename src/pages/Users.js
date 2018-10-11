@@ -1,53 +1,68 @@
 import React from 'react';
-import UsersList from '../components/UsersList';
-import UserStore from '../stores/UserStore';
-import {addUser, getUser} from '../actions/userAction';
+import UsersList from '../components/user/UsersList';
+import {addUser, getUsers, deleteUsers} from '../actions/userAction';
+import {connect} from 'react-redux'; // позволяет связать компонент со стором
+import AddUserForm from '../components/user/AddUser';
+import $ from 'jquery';
 
-export default class Users extends React.Component {
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            users: []
-        };
+class Users extends React.Component {
 
-        // bind
-        this.newUser = this.newUser.bind(this);
-        this.onUserChange = this.onUserChange.bind(this);
-    }
-
-    newUser() {
-        let id = 1;
-        let name = 'name';
-        let username = 'username';
-        let email = 'email';
-        let phone = 'phone';
-
-        // Action
-        addUser(id, name, username, email, phone)
-    }
-
-    // метод, который будет обновлять состояние. будем его подписывать на событие стора
-    onUserChange(users) {
-        this.setState({users});
-    }
-
-    // когда сформирует дом-дерево, мы вызовем action
     componentDidMount() {
         // Action
-        getUser();
-    }
+        this.props.dispatch(getUsers()); // передаем в диспатч, что вернул action
 
-    // подписаться на изменение состояния
-    componentWillMount() {
-        UserStore.on('change', this.onUserChange)
+        //добавление поста
+        $('#AddUserForm').on('submit', (event) => {
+            event.preventDefault(); // отменяем действие по умочанию, чтобы не перезагружалась страница
+
+            // данные
+            // let $idOfUser = $('#idOfUser');
+            let $userName = $('#userName');
+            let $userPhone  = $('#userPhone');
+            let $siteName = $('#siteName');
+            let $userEmail  = $('#userEmail');
+
+            let users = addUser($userName.val(), $siteName.val(), $userEmail.val(), $userPhone.val()); // передаем значения
+            this.props.dispatch(users);
+
+            $userName.val('');
+            // $idOfUser.val('');
+            $userPhone.val('');
+            $siteName.val('');
+            $userEmail.val('');
+        });
+
+        // удаление
+        $('a.user_del').live('click', (event) => {
+            event.preventDefault();
+            let idUser = $(event.currentTarget).attr('data-id');
+            this.props.dispatch(deleteUsers(idUser));
+        });
     }
 
     render() {
+        if(this.props.is_loading) {
+            return <div>
+                Данные загружаются
+            </div>
+        }
         return <div>
-            <button className='btn btn-primary' onClick={this.newUser}>Добавить юзера</button>
-            <UsersList users={this.state.users}/>
+            <AddUserForm/>
+            <UsersList users={this.props.users}/>
+
         </div>
+
 
     }
 }
+
+function mapStateToProps(store) {
+    return {
+        users: store.users.users, // забираем имя стора из combineReducers, и берем из редьюсера свойства объекта стор
+        is_loading: store.users.is_loading
+    }
+
+}
+
+export default connect(mapStateToProps)(Users); // возвращается функция, которую мы сразу вызываем для постов

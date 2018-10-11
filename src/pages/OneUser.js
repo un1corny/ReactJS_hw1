@@ -1,5 +1,5 @@
 import React from 'react';
-import User from '../components/User';
+import User from '../components/user/User';
 import UserService from '../services/UserService';
 
 export default class OneUser extends React.Component {

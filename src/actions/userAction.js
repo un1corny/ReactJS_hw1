@@ -1,21 +1,24 @@
-import dispatcher from '../dispatcher';
+import {ADD_USER, GET_USERS, DELETE_USERS} from '../constants/usersConstants';
 import axios from 'axios';
-import {ADD_USER, GET_USER} from "../constants/usersConstants";
 
-export function addUser(id, name, username, email, phone) {
-    dispatcher.dispatch({
-        type: ADD_USER,  // передаем тип действия, т.е. какая функция должна вызваться в сторе
-        payload: {id, name, username, email, phone} // добавляем, если есть какие-нибудь данные
-    });
+export function addUser(name, username, email, phone) {
+    const id = Math.floor(Math.random() * 10);
+    return {
+        type: ADD_USER,
+        payload: {id, name, username, email, phone},
+    };
 }
 
-export function getUser() {
-    axios
-        .get(`https://jsonplaceholder.typicode.com/users`)
-        .then((response) => {
-            dispatcher.dispatch({
-                type: GET_USER,
-                payload: response.data
-            });
-        })
+export function getUsers() {
+    return {
+        type: GET_USERS,
+        payload: axios.get(`https://jsonplaceholder.typicode.com/users`)
+    };
+}
+
+export function deleteUsers(idUser) {
+    return {
+        type: DELETE_USERS,
+        payload: idUser
+    };
 }
