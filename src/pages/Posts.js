@@ -13,15 +13,15 @@ class Posts extends React.Component {
         this.props.dispatch(getPosts()); // передаем в диспатч, что вернул action
 
         //добавление поста
-        $('#addPostForm').on('submit', (event) => {
+        $('body').on('submit', '#addPostForm', (event) => {
             event.preventDefault(); // отменяем действие по умочанию, чтобы не перезагружалась страница
 
             // данные
             let $userId = $('#idUser');
             let $postTitle = $('#postTitle');
-            let $postText  = $('#postText');
+            let $postText = $('#postText');
 
-            let posts = addPost($postTitle.val(), $userId.val(),  $postText.val()); // передаем значения
+            let posts = addPost($postTitle.val(), $userId.val(), $postText.val()); // передаем значения
             this.props.dispatch(posts);
 
             $postTitle.val('');
@@ -30,26 +30,27 @@ class Posts extends React.Component {
         });
 
         // удаление
-        $('a.post_del').on('click', (event) => {
+        $('body').on('click', 'a.post_del', (event) => {
             event.preventDefault();
             let idPost = $(event.currentTarget).attr('data-id');
             this.props.dispatch(deletePost(idPost));
         });
     }
 
+    componentWillUnmount() {
+        $('body').off();
+    }
+
     render() {
-        if(this.props.is_loading) {
+        if (this.props.is_loading) {
             return <div>
                 Данные загружаются
             </div>
         }
         return <div>
-        <FormPost/>
-        <PostsList posts={this.props.posts}/>
-
+            <FormPost/>
+            <PostsList posts={this.props.posts}/>
         </div>
-
-
     }
 }
 

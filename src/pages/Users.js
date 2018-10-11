@@ -13,36 +13,38 @@ class Users extends React.Component {
         this.props.dispatch(getUsers()); // передаем в диспатч, что вернул action
 
         //добавление поста
-        $('#AddUserForm').on('submit', (event) => {
+        $('body').on('submit', '#addUserForm', (event) => {
             event.preventDefault(); // отменяем действие по умочанию, чтобы не перезагружалась страница
 
             // данные
-            // let $idOfUser = $('#idOfUser');
             let $userName = $('#userName');
-            let $userPhone  = $('#userPhone');
+            let $userPhone = $('#userPhone');
             let $siteName = $('#siteName');
-            let $userEmail  = $('#userEmail');
+            let $userEmail = $('#userEmail');
 
             let users = addUser($userName.val(), $siteName.val(), $userEmail.val(), $userPhone.val()); // передаем значения
             this.props.dispatch(users);
 
             $userName.val('');
-            // $idOfUser.val('');
             $userPhone.val('');
             $siteName.val('');
             $userEmail.val('');
         });
 
         // удаление
-        $('a.user_del').live('click', (event) => {
+        $('body').on('click', 'a.user_del', (event) => {
             event.preventDefault();
             let idUser = $(event.currentTarget).attr('data-id');
             this.props.dispatch(deleteUsers(idUser));
         });
     }
 
+    componentWillUnmount() {
+        $('body').off();
+    }
+
     render() {
-        if(this.props.is_loading) {
+        if (this.props.is_loading) {
             return <div>
                 Данные загружаются
             </div>
@@ -52,8 +54,6 @@ class Users extends React.Component {
             <UsersList users={this.props.users}/>
 
         </div>
-
-
     }
 }
 

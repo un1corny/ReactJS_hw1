@@ -7,7 +7,6 @@ export default class PostsList extends React.Component {
         if (!this.props.posts.length) {
             return null;
         }
-
         let posts = this.props.posts.map((post, index) => {
             return <Post key={index} {...post}/>
         });

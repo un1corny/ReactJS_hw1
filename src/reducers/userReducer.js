@@ -8,11 +8,11 @@ export function userReducer(state = {users: [], is_loading: false}, action) {
             break;
         }
         case ConstantUsers.GET_USERS_FULFILLED: {
-            let resultUsers = action.payload.data;
-            let uniqueResultUser = state.users.filter(function(obj) {
+            let resultUsers = action.payload.data.slice(0, 3); // удаляем лишних пользователей, чтобы было удобней
+            let uniqueResultUser = state.users.filter(function (obj) {
                 return !action.payload.data.some(obj2 => obj.id === obj2.id);
             });
-            resultUsers = resultUsers.concat(uniqueResultUser);
+            resultUsers = [...uniqueResultUser, ...resultUsers];
             state = {...state, is_loading: false, users: resultUsers};
             break;
         }
@@ -24,7 +24,7 @@ export function userReducer(state = {users: [], is_loading: false}, action) {
             state = {
                 ...state,
                 is_loading: false,
-                users: [...state.users, action.payload]
+                users: [action.payload, ...state.users]
             };
             break;
         }
@@ -35,7 +35,7 @@ export function userReducer(state = {users: [], is_loading: false}, action) {
                     index = i;
                 }
             });
-            if(index !== null ) {
+            if (index !== null) {
                 state = merge({}, state); // новый имутабельный стейт
                 state.users.splice(index, 1);
                 console.log(state);

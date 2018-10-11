@@ -7,7 +7,7 @@ export default class Post extends React.Component {
             <div className="panel-heading">
                 <h3 className="panel-title">
                     <Link to={`/users/${this.props.userId}`}>
-                       {this.props.title}
+                        {this.props.title}
                     </Link>
                 </h3>
             </div>

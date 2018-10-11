@@ -10,12 +10,12 @@ export function postReducer(state = {posts: [], is_loading: false}, action) {
             break;
         }
         case ConstantPosts.GET_POSTS_FULFILLED: {
-            let resultPosts = action.payload.data;
+            let resultPosts = action.payload.data.slice(0, 3); // удаляем лишние посты, чтобы было удобней
             //Find values that are in result1 but not in result2
-            let uniqueResultPost = state.posts.filter(function(obj) {
+            let uniqueResultPost = state.posts.filter(function (obj) {
                 return !action.payload.data.some(obj2 => obj.id === obj2.id);
             });
-            resultPosts = resultPosts.concat(uniqueResultPost);
+            resultPosts = [...uniqueResultPost, ...resultPosts];
             state = {...state, is_loading: false, posts: resultPosts};
             break;
         }
@@ -27,8 +27,7 @@ export function postReducer(state = {posts: [], is_loading: false}, action) {
             state = {
                 ...state,
                 is_loading: false,
-                posts: [...state.posts, action.payload]
-
+                posts: [action.payload, ...state.posts]
             };
             console.log(action.payload);
             console.log(state);
@@ -43,7 +42,7 @@ export function postReducer(state = {posts: [], is_loading: false}, action) {
                     index = i;
                 }
             });
-            if(index !== null ) {
+            if (index !== null) {
                 state = merge({}, state); // новый имутабельный state
                 state.posts.splice(index, 1);
                 console.log(state);

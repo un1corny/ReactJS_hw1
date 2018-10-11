@@ -2,7 +2,7 @@ import {ADD_POST, GET_POSTS, DELETE_POSTS} from '../constants/postConstants';
 import axios from 'axios';
 
 export function addPost(title, userId, body) {
-    const id = Math.floor(Math.random() * 200) + 100;
+    const id = Math.floor(Math.random() * 200) + 101;
     return {
         type: ADD_POST,
         payload: {id, title, userId, body}

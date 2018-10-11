@@ -7,7 +7,6 @@ export default class UsersList extends React.Component {
         if (!this.props.users.length) {
             return null; // если данные грузятся
         }
-
         let users = this.props.users.map((user, index) => {
             return <User key={index} {...user}/>  // все что было у юзера разобьется на св-ва и пробросится
         });
