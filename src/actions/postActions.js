@@ -12,7 +12,8 @@ export function addPost(title, userId, body) {
 export function getPosts() {
     return {
         type: GET_POSTS,
-        payload: axios.get(`https://jsonplaceholder.typicode.com/posts`) // т.к. это не данные, а целиком промис, то сработает apply.middleware, который обработает результат
+        payload: axios.get(`http://localhost:8082/api/posts`)
+        // payload: axios.get(`https://jsonplaceholder.typicode.com/posts`) // т.к. это не данные, а целиком промис, то сработает apply.middleware, который обработает результат
     };
 }
 
